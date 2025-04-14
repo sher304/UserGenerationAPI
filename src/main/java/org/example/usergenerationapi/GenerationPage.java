@@ -2,6 +2,7 @@ package org.example.usergenerationapi;
 
 import net.datafaker.Faker;
 import org.example.usergenerationapi.Model.Person;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Controller
 public class GenerationPage {
@@ -28,17 +30,19 @@ public class GenerationPage {
     }
 
     @PostMapping("/generate")
-    public String generated(@RequestParam(defaultValue = "1") String entityNumber,
-                           @RequestParam(defaultValue = "English") String language,
+    public String generated(@RequestParam String entityNumber,
+                           @RequestParam("lang") String lang,
                            @RequestParam(required = false) List<String> fields,
                             Model model){
-        List<Person> personList = new ArrayList<>();
-        if (fields == null) {
-            personList = fakeDataService.generateUsers(entityNumber, language, false);
-            System.out.println("SIZE: " + personList.size());
-        } else {
-            personList = fakeDataService.generateUsers(entityNumber, language, true);
+
+        if (entityNumber.equals("") || lang == null) {
+            model.addAttribute("errorMessage", "Please enter a valid number of entries.");
+            return "generationPage";
         }
+
+
+        List<Person> personList = new ArrayList<>();
+        personList = fakeDataService.generateUsers(entityNumber, lang, fields);
         model.addAttribute("personList", personList);
         return "userGeneratedPage.html";
     }

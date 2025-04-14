@@ -22,38 +22,62 @@ public class FakeDataService {
         this.faker = faker;
     }
 
-    public List<Person> generateUsers(String entityNumber, String language, boolean fieldsRequired) {
-        System.out.println(entityNumber + " " + language + " " + fieldsRequired);
+    public List<Person> generateUsers(String entityNumber, String language, List<String> fieldsRequired) {
         Faker localizedFaker = new Faker(new Locale(language));
         List<Person> people = new ArrayList<>();
 
-        if (fieldsRequired) {
-            for (int i = 0; i < Integer.valueOf(entityNumber); i++) {
+        for (int i = 0; i < Integer.valueOf(entityNumber); i++) {
+            if (fieldsRequired != null) {
                 String firstName = localizedFaker.name().firstName();
                 String lastName = localizedFaker.name().lastName();
                 Person person = new Person(firstName, lastName);
-                person.setEmail(localizedFaker.internet().emailAddress());
-                person.setAddress(localizedFaker.address().fullAddress());
-                person.setCompany(localizedFaker.company().name());
-                person.setCountry(localizedFaker.country().name());
-                person.setFavBook(localizedFaker.book().title());
-                person.setFavCoffee(localizedFaker.coffee().name1());
-                person.setGender(localizedFaker.gender().toString());
-                person.setPet(localizedFaker.animal().name());
-                person.setTransport(localizedFaker.transport().type());
-                person.setUniversity(localizedFaker.university().name());
+                person.setBd(localizedFaker.date().birthday());
+                if (fieldsRequired.contains("email")) {
+                    person.setEmail(localizedFaker.internet().emailAddress());
+                }
+                if (fieldsRequired.contains("address")) {
+                    person.setAddress(localizedFaker.address().fullAddress());
+                }
+                if (fieldsRequired.contains("company")) {
+                    person.setCompany(localizedFaker.company().name());
+                }
+                if (fieldsRequired.contains("country")) {
+                    person.setCountry(localizedFaker.country().name());
+                }
+                if (fieldsRequired.contains("book")) {
+                    person.setFavBook(localizedFaker.book().title());
+                }
+                if (fieldsRequired.contains("coffee")) {
+                    person.setFavCoffee(localizedFaker.coffee().name1());
+                }
+                if (fieldsRequired.contains("gender")) {
+                    person.setGender(localizedFaker.demographic().sex());
+                }
+                if (fieldsRequired.contains("pet")) {
+                    person.setPet(localizedFaker.animal().name());
+                }
+                if (fieldsRequired.contains("transport")) {
+                    person.setTransport(localizedFaker.transport().type());
+                }
+                if (fieldsRequired.contains("university")) {
+                    person.setUniversity(localizedFaker.university().name());
+                }
+                if (fieldsRequired.contains("job")) {
+                    person.setJob(localizedFaker.job().title());
+                }
+                if (fieldsRequired.contains("phoneNumber")) {
+                    person.setPhoneNumber(localizedFaker.phoneNumber().phoneNumber());
+                }
+                person.setLanguage(language);
                 people.add(person);
-            }
-        } else {
-            for (int i = 0; i < Integer.valueOf(entityNumber); i++) {
+            } else {
                 String firstName = localizedFaker.name().firstName();
                 String lastName = localizedFaker.name().lastName();
                 Person person = new Person(firstName, lastName);
+                person.setBd(localizedFaker.date().birthday());
                 people.add(person);
             }
         }
-
         return people;
-    }
-
+    };
 }

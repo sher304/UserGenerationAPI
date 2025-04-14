@@ -2,8 +2,12 @@ package org.example.usergenerationapi.Model;
 
 import net.datafaker.Faker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Component;
 
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Person {
@@ -19,7 +23,7 @@ public class Person {
     private String gender;
     private String job;
     private String company;
-    private Date bd;
+    private Timestamp bd;
     private String pet;
     private String transport;
     private String favCoffee;
@@ -66,7 +70,7 @@ public class Person {
         this.company = company;
     }
 
-    public void setBd(Date bd) {
+    public void setBd(Timestamp bd) {
         this.bd = bd;
     }
 
@@ -84,6 +88,70 @@ public class Person {
 
     public void setFavBook(String favBook) {
         this.favBook = favBook;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getLanguage() {
+        return language;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getUniversity() {
+        return university;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public Timestamp getBd() {
+        return bd;
+    }
+
+    public String getPet() {
+        return pet;
+    }
+
+    public String getTransport() {
+        return transport;
+    }
+
+    public String getFavCoffee() {
+        return favCoffee;
+    }
+
+    public String getFavBook() {
+        return favBook;
     }
 
     @Override
